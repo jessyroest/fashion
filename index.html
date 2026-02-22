@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOCTIS VESPERA — Sacred Couture</title>
+  <meta name="description" content="Garments forged in shadow. Worn by those who command presence.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== CURSOR ===================== -->
+  <div id="cursor" aria-hidden="true">
+    <div class="cursor-h"></div>
+    <div class="cursor-v"></div>
+    <div class="cursor-ring"></div>
+  </div>
+
+  <!-- ===================== LOADER ===================== -->
+  <div id="loader">
+    <canvas id="loader-grain"></canvas>
+    <div class="loader-sigil-wrap">
+      <img
+        src="video/hf_20260222_155331_0fbe79bd-2fce-4b01-90e6-def4022babff.jpeg"
+        alt="Noctis Vespera Sigil"
+        class="loader-sigil-img"
+      >
+      <div class="loader-sigil-glow"></div>
+    </div>
+    <div class="loader-brand-wrap">
+      <div class="loader-brand-line"></div>
+      <p class="loader-brand-name" id="loader-brand-name">NOCTIS&nbsp;&nbsp;VESPERA</p>
+      <div class="loader-brand-line"></div>
+    </div>
+    <p class="loader-sub-text">Sacred Couture &mdash; Est. MMXXIV</p>
+    <div class="loader-progress">
+      <div class="loader-progress-inner" id="loader-progress-inner"></div>
+    </div>
+  </div>
+
+  <!-- ===================== GLOBAL OVERLAYS ===================== -->
+  <canvas id="grain" aria-hidden="true"></canvas>
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- ===================== NAV ===================== -->
+  <nav id="nav">
+    <a href="#hero" class="nav-logo" aria-label="Noctis Vespera Home">
+      <span class="nav-nv">N&nbsp;V</span>
+    </a>
+    <div class="nav-links">
+      <a href="#philosophy" class="nav-link">Philosophy</a>
+      <a href="#garment-1" class="nav-link">Collection</a>
+      <a href="#symbolism" class="nav-link">Sigil</a>
+      <a href="#initiation" class="nav-link nav-link-cta">Enter</a>
+    </div>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu">
+      <span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero">
+    <div class="hero-video-wrap">
+      <video
+        id="hero-video"
+        autoplay muted loop playsinline
+        preload="metadata"
+      >
+        <source src="video/hf_20260222_155304_026f32c8-e8e2-4c8f-a17a-66bcd8c566fd.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="hero-model-wrap" id="hero-model-wrap">
+      <img
+        src="video/hf_20260222_155056_40dcd5e3-2bbd-47db-8068-9e14efc5fcad.jpeg"
+        alt=""
+        class="hero-model-img"
+        aria-hidden="true"
+      >
+      <div class="hero-model-fade"></div>
+    </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content" id="hero-content">
+      <p class="hero-eyebrow reveal-char">&#8212;&nbsp;Sacred Couture&nbsp;&#8212;</p>
+      <h1 class="hero-title">
+        <span class="hero-line" data-delay="100">WE ARE NOT</span>
+        <span class="hero-line hero-line-large" data-delay="350">A BRAND.</span>
+        <span class="hero-line" data-delay="600">WE ARE</span>
+        <span class="hero-line hero-line-italic" data-delay="900">A RITUAL.</span>
+      </h1>
+      <p class="hero-sub reveal-up" data-delay="1400">
+        Garments forged in shadow.<br>Worn by those who command presence.
+      </p>
+      <div class="hero-ctas reveal-up" data-delay="1700">
+        <a href="#garment-1" class="btn-primary">Enter The Order</a>
+        <a href="#garment-1" class="btn-ghost">View The Collection</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint" id="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Descend</span>
+    </div>
+
+    <div class="hero-corner hero-corner-tl">MMXXVI</div>
+    <div class="hero-corner hero-corner-tr">I &#8212; IV</div>
+    <div class="hero-corner hero-corner-bl">NV&nbsp;&#8212;&nbsp;CEREMONY</div>
+    <div class="hero-corner hero-corner-br">SACRED</div>
+  </section>
+
+  <!-- ===================== PHILOSOPHY ===================== -->
+  <section id="philosophy" aria-label="Brand Philosophy">
+    <div class="philosophy-sticky" id="philosophy-sticky">
+      <div class="philosophy-bg">
+        <img
+          src="video/hf_20260222_155128_50221fe4-7507-44a6-9223-19cd6b7236fd.jpeg"
+          alt=""
+          aria-hidden="true"
+          class="philosophy-bg-img"
+        >
+        <div class="philosophy-bg-overlay"></div>
+      </div>
+      <div class="philosophy-lines-wrap" id="philosophy-lines-wrap">
+        <div class="philo-line" id="pl-0">Power is silent.</div>
+        <div class="philo-line" id="pl-1">Elegance is<br>intimidation.</div>
+        <div class="philo-line" id="pl-2">Scarcity is sacred.</div>
+        <div class="philo-line" id="pl-3">We do not release<br>collections.</div>
+        <div class="philo-line philo-line-final" id="pl-4">We unveil<br>ceremonies.</div>
+      </div>
+      <div class="philosophy-counter" id="philosophy-counter">
+        <span id="philo-num">01</span>
+        <span class="philo-sep">/</span>
+        <span>05</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== GARMENT 1 ===================== -->
+  <section id="garment-1" class="garment-section" data-garment="1">
+    <div class="garment-bg-wrap">
+      <img
+        src="video/hf_20260222_155350_3fdfb957-7f61-4aa1-8507-2d516435bb9d.jpeg"
+        alt="Vespera Coat I — Limited Edition"
+        class="garment-bg-img"
+        loading="lazy"
+      >
+    </div>
+    <div class="garment-overlay garment-overlay-left"></div>
+
+    <div class="garment-content garment-content-left">
+      <div class="garment-number reveal-up">001</div>
+      <h2 class="garment-name reveal-up" data-delay="100">
+        Vespera<br>Coat&nbsp;<span class="garment-name-num">I</span>
+      </h2>
+      <div class="garment-edition reveal-up" data-delay="200">Handcrafted &mdash; Limited to 47 pieces</div>
+      <div class="garment-material reveal-up" data-delay="300">
+        <span>Midnight wool blend</span>
+        <span class="material-sep">·</span>
+        <span>Silver embroidery</span>
+      </div>
+      <div class="garment-ctas reveal-up" data-delay="400">
+        <button class="btn-witness" data-garment="1">Witness Details</button>
+        <button class="btn-reserve" data-target="#initiation">Reserve Piece</button>
+      </div>
+    </div>
+
+    <div class="garment-side-text garment-side-right">Ceremony&nbsp;III&nbsp;&#8212;&nbsp;2024</div>
+  </section>
+
+  <!-- ===================== GARMENT 2 ===================== -->
+  <section id="garment-2" class="garment-section" data-garment="2">
+    <div class="garment-bg-wrap">
+      <img
+        src="video/hf_20260222_155349_ec385984-b981-478e-821c-4edc5b6f498c.jpeg"
+        alt="Vespera Coat II — Limited Edition"
+        class="garment-bg-img"
+        loading="lazy"
+      >
+    </div>
+    <div class="garment-overlay garment-overlay-right"></div>
+
+    <div class="garment-content garment-content-right">
+      <div class="garment-number reveal-up">002</div>
+      <h2 class="garment-name reveal-up" data-delay="100">
+        Vespera<br>Coat&nbsp;<span class="garment-name-num">II</span>
+      </h2>
+      <div class="garment-edition reveal-up" data-delay="200">Handcrafted &mdash; Limited to 23 pieces</div>
+      <div class="garment-material reveal-up" data-delay="300">
+        <span>Black crepe</span>
+        <span class="material-sep">·</span>
+        <span>Ceremonial silver thread</span>
+      </div>
+      <div class="garment-ctas reveal-up" data-delay="400">
+        <button class="btn-witness" data-garment="2">Witness Details</button>
+        <button class="btn-reserve" data-target="#initiation">Reserve Piece</button>
+      </div>
+    </div>
+
+    <div class="garment-side-text garment-side-left">Ceremony&nbsp;III&nbsp;&#8212;&nbsp;2024</div>
+  </section>
+
+  <!-- ===================== EDITORIAL ===================== -->
+  <section id="editorial">
+    <div class="editorial-image-col">
+      <img
+        src="video/hf_20260222_155343_1872fafe-0d07-4415-abf8-d2868bfa1c46.jpeg"
+        alt="The Order — Noctis Vespera"
+        loading="lazy"
+        class="editorial-img"
+      >
+      <div class="editorial-img-overlay"></div>
+    </div>
+    <div class="editorial-text-col">
+      <div class="editorial-label reveal-up">&#8212;&nbsp;The Order&nbsp;&#8212;</div>
+      <h2 class="editorial-title reveal-up" data-delay="150">Those Who<br>Wear Shadow</h2>
+      <p class="editorial-body reveal-up" data-delay="300">
+        Each garment is not merely worn. It is assumed. A declaration without words. A power that enters the room before you do.
+      </p>
+      <p class="editorial-body reveal-up" data-delay="450">
+        The Order does not seek visibility. It radiates it — quietly, absolutely, without apology.
+      </p>
+      <a href="#initiation" class="editorial-link reveal-up" data-delay="600">
+        Seek Membership
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===================== SYMBOLISM ===================== -->
+  <section id="symbolism">
+    <div class="symbolism-cathedral-bg">
+      <img
+        src="video/hf_20260222_155344_c250a891-ab35-48aa-b87b-f6d8d8bec9f2.jpeg"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+      >
+      <div class="symbolism-cathedral-overlay"></div>
+    </div>
+
+    <div class="symbolism-inner">
+      <div class="symbolism-sigil-col">
+        <div class="symbolism-sigil-wrap" id="sigil-wrap">
+          <img
+            src="video/hf_20260222_155333_081859d7-4ea0-4be6-8679-8aa8ef4dbd06.jpeg"
+            alt="The Sigil of Noctis Vespera"
+            class="symbolism-sigil-img"
+            loading="lazy"
+          >
+          <div class="symbolism-sigil-ring" id="sigil-ring"></div>
+          <div class="symbolism-sigil-glow"></div>
+        </div>
+      </div>
+
+      <div class="symbolism-text-col">
+        <div class="symbolism-label reveal-up">&#8212;&nbsp;The Mark&nbsp;&#8212;</div>
+        <h2 class="symbolism-title reveal-up" data-delay="150">Marked<br>By Shadow.</h2>
+        <p class="symbolism-body reveal-up" data-delay="300">
+          The sigil of Noctis Vespera was not designed. It was revealed. Its form carries the weight of seven centuries of sacred craft — a symbol for those who choose depth over spectacle, permanence over trend.
+        </p>
+        <p class="symbolism-body symbolism-body-small reveal-up" data-delay="450">
+          The meaning is yours to discover.
+        </p>
+        <div class="symbolism-sep reveal-up" data-delay="600"></div>
+        <p class="symbolism-coords reveal-up" data-delay="700">
+          48°51'N &nbsp;·&nbsp; 2°21'E &nbsp;·&nbsp; Cathedral. Midnight.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CEREMONY ===================== -->
+  <section id="ceremony">
+    <div class="ceremony-inner">
+      <div class="ceremony-eyebrow reveal-up">Upcoming Unveiling</div>
+      <h2 class="ceremony-title reveal-up" data-delay="150">Ceremony&nbsp;IV</h2>
+      <div class="ceremony-rule reveal-up" data-delay="250"></div>
+      <div class="ceremony-countdown reveal-up" data-delay="350" id="countdown">
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-days">05</span>
+          <span class="cd-label">Days</span>
+        </div>
+        <div class="cd-dot">·</div>
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-hours">00</span>
+          <span class="cd-label">Hours</span>
+        </div>
+        <div class="cd-dot">·</div>
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-mins">00</span>
+          <span class="cd-label">Minutes</span>
+        </div>
+        <div class="cd-dot">·</div>
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-secs">00</span>
+          <span class="cd-label">Seconds</span>
+        </div>
+      </div>
+      <p class="ceremony-sub reveal-up" data-delay="500">A new unveiling. By invitation only.</p>
+      <a href="#initiation" class="ceremony-link reveal-up" data-delay="650">Request Access</a>
+    </div>
+    <div class="ceremony-corner-tl"></div>
+    <div class="ceremony-corner-tr"></div>
+    <div class="ceremony-corner-bl"></div>
+    <div class="ceremony-corner-br"></div>
+  </section>
+
+  <!-- ===================== INITIATION ===================== -->
+  <section id="initiation">
+    <div class="initiation-inner">
+      <div class="initiation-label reveal-up">&#8212;&nbsp;The Final Gate&nbsp;&#8212;</div>
+      <h2 class="initiation-title reveal-up" data-delay="150">
+        Not Everyone<br>Belongs.
+      </h2>
+      <p class="initiation-sub reveal-up" data-delay="300">Request Access.</p>
+
+      <form class="initiation-form reveal-up" id="initiation-form" data-delay="450" novalidate>
+        <div class="form-field-wrap">
+          <input
+            type="email"
+            id="email-input"
+            name="email"
+            placeholder="Your contact address"
+            autocomplete="email"
+            required
+          >
+          <div class="form-underline"></div>
+        </div>
+        <button type="submit" class="btn-enter">
+          <span>Seek Entry</span>
+          <div class="btn-enter-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </button>
+      </form>
+
+      <p class="initiation-note reveal-up" data-delay="600">
+        We contact the worthy. Response is never guaranteed.
+      </p>
+    </div>
+
+    <footer class="initiation-footer">
+      <div class="footer-logo">NOCTIS VESPERA</div>
+      <div class="footer-links">
+        <a href="#hero">Ascend</a>
+        <span>·</span>
+        <a href="#garment-1">Collection</a>
+        <span>·</span>
+        <a href="#philosophy">Philosophy</a>
+      </div>
+      <div class="footer-copy">&copy; MMXXVI &mdash; All rites reserved</div>
+    </footer>
+  </section>
+
+  <!-- ===================== GARMENT MODAL ===================== -->
+  <div id="garment-modal" class="modal-hidden" role="dialog" aria-modal="true" aria-label="Garment Details" aria-hidden="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-panel">
+      <button class="modal-close" id="modal-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <div class="modal-image-col">
+        <img src="" alt="" id="modal-img" class="modal-img">
+        <div class="modal-img-vignette"></div>
+        <div class="modal-img-num" id="modal-img-num">001</div>
+      </div>
+
+      <div class="modal-info-col">
+        <div class="modal-info-inner">
+          <div class="modal-label">Sacred Piece</div>
+          <h3 class="modal-name" id="modal-name">Vespera Coat I</h3>
+
+          <div class="modal-ritual-wrap">
+            <div class="modal-ritual-label">The Ritual</div>
+            <p class="modal-ritual-text" id="modal-ritual-text"></p>
+          </div>
+
+          <div class="modal-specs">
+            <div class="modal-spec">
+              <span class="spec-key">Material</span>
+              <span class="spec-val" id="modal-material"></span>
+            </div>
+            <div class="modal-spec">
+              <span class="spec-key">Embroidery</span>
+              <span class="spec-val" id="modal-embroidery"></span>
+            </div>
+            <div class="modal-spec">
+              <span class="spec-key">Origin</span>
+              <span class="spec-val" id="modal-origin"></span>
+            </div>
+            <div class="modal-spec">
+              <span class="spec-key">Edition</span>
+              <span class="spec-val" id="modal-edition"></span>
+            </div>
+          </div>
+
+          <div class="modal-symbol-wrap">
+            <div class="modal-symbol-label">Symbol Embedded</div>
+            <p class="modal-symbol-text" id="modal-symbol-text"></p>
+          </div>
+
+          <button class="btn-modal-reserve" id="btn-modal-reserve">
+            Reserve This Piece
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TOAST ===================== -->
+  <div id="toast" role="status" aria-live="polite">
+    <div class="toast-line"></div>
+    <p id="toast-text">Request received. The Order will be in contact.</p>
+  </div>
+
+  <!-- ===================== MOBILE NAV ===================== -->
+  <div id="mobile-nav">
+    <div class="mobile-nav-inner">
+      <a href="#philosophy" class="mobile-nav-link">Philosophy</a>
+      <a href="#garment-1" class="mobile-nav-link">Collection</a>
+      <a href="#symbolism" class="mobile-nav-link">Sigil</a>
+      <a href="#ceremony" class="mobile-nav-link">Ceremony</a>
+      <a href="#initiation" class="mobile-nav-link">Enter</a>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
