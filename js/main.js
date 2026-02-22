@@ -157,8 +157,8 @@ class Cursor {
   }
 
   tick() {
-    this.x = lerp(this.x, this.tx, 0.12);
-    this.y = lerp(this.y, this.ty, 0.12);
+    this.x = this.tx;
+    this.y = this.ty;
     this.el.style.transform = `translate(${this.x}px, ${this.y}px) translate(-50%, -50%)`;
     this.raf = requestAnimationFrame(() => this.tick());
   }
@@ -790,6 +790,197 @@ function bindModalImageHover() {
 }
 
 /* ─── SCROLL PROGRESS LINE ───────────────────────────────── */
+/* ─── SMOKE TRAIL ────────────────────────────────────────── */
+class SmokeTrail {
+  constructor() {
+    this.lastX   = 0;
+    this.lastY   = 0;
+    this.minDist = 14;
+    // disable on touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    window.addEventListener('mousemove', e => this.onMove(e), { passive: true });
+  }
+
+  onMove(e) {
+    const dx   = e.clientX - this.lastX;
+    const dy   = e.clientY - this.lastY;
+    if (Math.sqrt(dx * dx + dy * dy) < this.minDist) return;
+    this.lastX = e.clientX;
+    this.lastY = e.clientY;
+    this.spawn(e.clientX, e.clientY);
+  }
+
+  spawn(x, y) {
+    const size = 8 + Math.random() * 12;
+    const el   = document.createElement('div');
+    el.className = 'smoke-particle';
+    el.style.cssText = `
+      left: ${x}px;
+      top: ${y}px;
+      width: ${size}px;
+      height: ${size}px;
+      background: radial-gradient(circle,
+        rgba(100,88,80,0.38) 0%,
+        rgba(60,14,14,0.12) 50%,
+        transparent 75%);
+      opacity: 0.55;
+    `;
+    document.body.appendChild(el);
+
+    const start   = performance.now();
+    const dur     = 850 + Math.random() * 450;
+    const driftX  = (Math.random() - 0.5) * 28;
+    const driftY  = -(18 + Math.random() * 24);
+    const maxScale = 1.8 + Math.random() * 1.2;
+
+    const tick = (now) => {
+      const t    = Math.min((now - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - t, 2);
+      el.style.opacity   = (0.55 * (1 - t)).toFixed(3);
+      el.style.transform = `translate(calc(-50% + ${driftX * ease}px), calc(-50% + ${driftY * ease}px)) scale(${1 + (maxScale - 1) * ease})`;
+      if (t < 1) requestAnimationFrame(tick);
+      else el.remove();
+    };
+    requestAnimationFrame(tick);
+  }
+}
+
+/* ─── SOUL COUNTER ───────────────────────────────────────── */
+const ROMAN_MAP = [
+  [50,'L'],[40,'XL'],[10,'X'],[9,'IX'],
+  [5,'V'],[4,'IV'],[1,'I']
+];
+function toRoman(n) {
+  let s = '';
+  for (const [v, sym] of ROMAN_MAP) { while (n >= v) { s += sym; n -= v; } }
+  return s;
+}
+
+class SoulCounter {
+  constructor() {
+    this.el    = document.getElementById('soul-num');
+    if (!this.el) return;
+    this.count = 11 + Math.floor(Math.random() * 13); // 11–23
+    this.render();
+    this.tick();
+  }
+
+  render() {
+    if (this.el) this.el.textContent = toRoman(this.count);
+  }
+
+  tick() {
+    const delay = 9000 + Math.random() * 11000; // 9–20 s
+    setTimeout(() => {
+      const delta    = Math.random() < 0.65 ? 1 : -1;
+      this.count     = Math.max(5, Math.min(49, this.count + delta));
+      if (this.el) {
+        this.el.style.opacity = '0';
+        setTimeout(() => {
+          this.render();
+          this.el.style.opacity = '1';
+        }, 380);
+      }
+      this.tick();
+    }, delay);
+  }
+}
+
+/* ─── LETTER REPULSION ───────────────────────────────────── */
+class LetterRepulsion {
+  constructor() {
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    this.radius   = 90;
+    this.strength = 38;
+    this.letters  = [];
+    this.rects    = [];
+    this.mouse    = { x: -9999, y: -9999 };
+    this.raf      = null;
+
+    // Split every hero-line into per-character inline spans
+    document.querySelectorAll('.hero-line').forEach(line => {
+      const text = line.textContent;
+      line.textContent = '';
+      [...text].forEach(ch => {
+        const s = document.createElement('span');
+        s.textContent = ch;
+        s.style.display = 'inline-block';
+        s.style.transition = 'transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)';
+        line.appendChild(s);
+        if (ch.trim()) this.letters.push(s);
+      });
+    });
+
+    this.cacheRects();
+    window.addEventListener('resize', () => this.cacheRects(), { passive: true });
+    window.addEventListener('scroll', () => this.cacheRects(), { passive: true });
+    window.addEventListener('mousemove', e => {
+      this.mouse.x = e.clientX;
+      this.mouse.y = e.clientY;
+      if (!this.raf) this.raf = requestAnimationFrame(() => { this.update(); this.raf = null; });
+    }, { passive: true });
+  }
+
+  cacheRects() {
+    // Only cache while hero is near viewport
+    this.rects = this.letters.map(s => {
+      const r = s.getBoundingClientRect();
+      return { cx: r.left + r.width / 2, cy: r.top + r.height / 2 };
+    });
+  }
+
+  update() {
+    const { x, y } = this.mouse;
+    // Only active when hero is in view (scrollY < 120vh)
+    if (window.scrollY > window.innerHeight * 1.2) {
+      this.letters.forEach(s => { s.style.transform = 'translate(0,0)'; });
+      return;
+    }
+    this.letters.forEach((s, i) => {
+      const { cx, cy } = this.rects[i];
+      const dx   = x - cx;
+      const dy   = y - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < this.radius && dist > 0) {
+        const force = (1 - dist / this.radius) * this.strength;
+        const angle = Math.atan2(dy, dx);
+        const px = -Math.cos(angle) * force;
+        const py = -Math.sin(angle) * force;
+        s.style.transform = `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px)`;
+      } else {
+        s.style.transform = 'translate(0,0)';
+      }
+    });
+  }
+}
+
+/* ─── GARMENT SCROLL DESATURATION ───────────────────────── */
+class GarmentScrollFade {
+  constructor() {
+    this.items = [...document.querySelectorAll('.garment-section')].map(sec => ({
+      sec,
+      img: sec.querySelector('.garment-bg-img')
+    })).filter(o => o.img);
+
+    if (!this.items.length) return;
+    window.addEventListener('scroll', () => this.update(), { passive: true });
+    this.update();
+  }
+
+  update() {
+    this.items.forEach(({ sec, img }) => {
+      const rect  = sec.getBoundingClientRect();
+      const secH  = sec.offsetHeight;
+      // progress 0 = section top at viewport top, 1 = fully scrolled past
+      const prog  = clamp(-rect.top / secH, 0, 1);
+      // Saturate: 0.5 → 0.08   Brightness: 0.6 → 0.35
+      const sat   = (0.5 - prog * 0.42).toFixed(3);
+      const bri   = (0.6 - prog * 0.25).toFixed(3);
+      img.style.filter = `brightness(${bri}) saturate(${sat}) contrast(1.05)`;
+    });
+  }
+}
+
 function initScrollProgress() {
   const bar = document.createElement('div');
   bar.style.cssText = `
@@ -830,6 +1021,11 @@ function init() {
   const secObs  = new SectionObserver();
   const gObs    = new GarmentObserver();
   const hParallax = new HeroParallax();
+
+  const smoke    = new SmokeTrail();
+  const souls    = new SoulCounter();
+  const repulse  = new LetterRepulsion();
+  const gFade    = new GarmentScrollFade();
 
   bindSmoothScroll();
   refreshCursorTargets();

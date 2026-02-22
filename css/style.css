@@ -409,6 +409,59 @@ body:hover #cursor .cursor-ring {
   transform: translateY(-6px) rotate(-45deg);
 }
 
+/* ─── NAV SOUL COUNTER ───────────────────────────────────── */
+.nav-soul {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--silver-dim);
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.soul-pulse {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--blood);
+  animation: soul-beat 2.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes soul-beat {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  45%       { opacity: 1;   transform: scale(1.3); box-shadow: 0 0 6px var(--blood); }
+  55%       { opacity: 0.9; transform: scale(1.1); }
+}
+
+#soul-num {
+  font-family: var(--sc);
+  color: var(--bone-dim);
+  transition: opacity 0.4s ease;
+}
+
+.soul-text {
+  transition: opacity 0.4s ease;
+}
+
+/* ─── SMOKE TRAIL ─────────────────────────────────────────── */
+.smoke-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  .nav-soul { display: none; }
+}
+
 /* ─── HERO ───────────────────────────────────────────────── */
 #hero {
   position: relative;
@@ -766,7 +819,7 @@ body:hover #cursor .cursor-ring {
 /* ─── PHILOSOPHY ─────────────────────────────────────────── */
 #philosophy {
   position: relative;
-  height: 600vh;
+  height: 300vh;
 }
 
 .philosophy-sticky {
